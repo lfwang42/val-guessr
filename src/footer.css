@@ -1,0 +1,34 @@
+.footer {
+    text-align: center;
+    background-color: #282c34;
+    min-height: 10vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+    white-space: pre-wrap;
+  }
+
+  .author {
+    position: relative;
+    display: inline-block;
+    text-decoration: underline;
+  }
+
+.footerlink:link {
+    color: white; 
+}
+
+.footerlink:visited {
+    color: white; 
+}
+
+.footerlink:hover {
+    color: lightblue; 
+}
+
+.footerlink:hover {
+    color: lightblue; 
+}
