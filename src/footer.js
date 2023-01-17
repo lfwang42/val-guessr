@@ -10,6 +10,8 @@ function Footer() {
   }*/
   //images stored locally (?), but have id, names, and store their lat/longitude locally
     <div className="footer">Created by <div class = "author"><a class = "footerlink" href="https://www.google.com">Lanney Wang.</a></div>
+    <br />
+    Inspired by <a class = "footerlink" href="https://www.geoguessr.com">geoguessr</a>
     </div>
     );
   }
