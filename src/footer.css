@@ -9,11 +9,11 @@
     white-space: pre-wrap;
   }
 
-  .author {
+.author {
     position: relative;
     display: inline-block;
     text-decoration: underline;
-  }
+}
 
 .footerlink:link {
     color: white; 
