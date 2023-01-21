@@ -35,9 +35,9 @@
 
 .MapBox {
   height:40%;
-  width:40%;
+  width:30%;
   position: absolute;
   background-color: bisque;
   top: 60%;
-  left: 60%;
+  left: 70%;
 }

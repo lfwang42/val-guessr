@@ -49,7 +49,7 @@ function GameMap(props) {
         whenCreated={ mapInstance => { this.mapRef.current = mapInstance } }>
           <ImageOverlay
             attribution='&copy; <a href="https://valorant.fandom.com">Valorant Wiki</a>'
-            url = "https://static.wikia.nocookie.net/valorant/images/6/63/Pearl_minimap.png"
+            url = "https://i.ibb.co/JysvcfK/Pearl-minimap.png"
             bounds= {bounds}
             zIndex = {1}
           />
