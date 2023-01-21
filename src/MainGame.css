@@ -11,8 +11,16 @@
     color: #61dafb;
   }
   
-  
-  .StartButton {
+.MainDisplay {
+  width: 100%;
+  height: 100%;
+}
+
+  .MainImage {
+    max-width: 100%;
+    max-height: 100%;
   }
   
-  
+.map {
+  height:50%;
+}
