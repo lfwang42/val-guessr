@@ -1,14 +1,29 @@
 import './MainGame.css';
 import React, { useState } from 'react';
-import { MapContainer, TileLayer, Popup, Marker, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, Popup, Marker, useMapEvents, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
-import {Icon} from 'leaflet'
+import {Icon, marker} from 'leaflet'
+import GameMap from './GameMap';
 
 function MainGame(props) {
     const [gameEnded, startGame] = React.useState(false);
     const [round, setRound] = React.useState(1);
     const [pics, setPics] = useState([{"name": './media/1.jpg'}, {"name":'./media/2.jpg'}, {"name": './media/3.jpg'}])
+
+    
+    function LocationMarker() {
+      const [position, setPosition] = useState(null)
+      const map = useMapEvents({
+        click(e) {
+          setPosition([e.latlng.lat, e.latlng.lng]);     
+        },
+      });
+    
+      return position === null ? null : (
+        <Marker icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}  position={position} />
+      )
+    }
 
     return (
       /* "_id": "new9",
@@ -22,14 +37,9 @@ function MainGame(props) {
     <div className="MainGame">
       <div className="MainDisplay">
         
-        <MapContainer style={{ height: "450px", width: "100%" }} center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <Marker position={[51.505, -0.09]} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}>
-          </Marker>
-        </MapContainer>
+        <div className="MapBox">
+          <GameMap />
+        </div>
       </div>        
     </div>
  
