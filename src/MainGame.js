@@ -11,19 +11,6 @@ function MainGame(props) {
     const [round, setRound] = React.useState(1);
     const [pics, setPics] = useState([{"name": 'k4m1DPP/2023-01-21-3.png', "coords": [500, 500]}]);
     const currentPic = "https://i.ibb.co/"+pics[0].name;
-    
-    function LocationMarker() {
-      const [position, setPosition] = useState(null)
-      const map = useMapEvents({
-        click(e) {
-          setPosition([e.latlng.lat, e.latlng.lng]);     
-        },
-      });
-    
-      return position === null ? null : (
-        <Marker icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}  position={position} />
-      )
-    }
 
     return (
       /* "_id": "new9",

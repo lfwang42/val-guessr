@@ -1,11 +1,12 @@
 import './GameMap.css';
 import React, { useState } from 'react';
-import { MapContainer, Marker, useMapEvents, ImageOverlay, TileLayer, Popup } from 'react-leaflet'
+import { MapContainer, Marker, useMapEvents, ImageOverlay, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
-import {CRS, Icon, marker} from 'leaflet'
+import {CRS, Iconker} from 'leaflet'
 
 function GameMap(props) {
+    const [map, setMap] = useState(props.map);
     const bounds = [
         [0, 0],
         [1024, 1024]
@@ -49,7 +50,7 @@ function GameMap(props) {
         whenCreated={ mapInstance => { this.mapRef.current = mapInstance } }>
           <ImageOverlay
             attribution='&copy; <a href="https://valorant.fandom.com">Valorant Wiki</a>'
-            url = "https://i.ibb.co/JysvcfK/Pearl-minimap.png"
+            url = "https://i.ibb.co/ZzcP08y/Ascent-minimap.png"
             bounds= {bounds}
             zIndex = {1}
           />
