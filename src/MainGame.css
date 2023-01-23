@@ -79,4 +79,23 @@
   color: white;
   text-align: center;
   font: 18px Arial, sans-serif;
+  opacity: 50%;
+  transition:0s 1s;
+}
+
+#MapSelect:hover {
+  opacity: 100%;
+  transition: 0s;
+}
+
+#GuessButton{
+  min-width: 100%;
+  min-height: 15%;
+  position:absolute;
+  bottom:0px;
+  left:0px;
+  background-color: red;
+  color: white;
+  text-align: center;
+  font: 18px Arial, sans-serif;
 }

@@ -1,19 +1,25 @@
 import './MainGame.css';
 import React, { useState } from 'react';
-import { MapContainer, TileLayer, Popup, Marker, useMapEvents, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
-import markerIconPng from "leaflet/dist/images/marker-icon.png"
-import {Icon, marker} from 'leaflet'
+import Select from 'react';
 import GameMap from './GameMap';
+import Ascent from "./media/Ascent.png"
+import Pearl from "./media/Pearl.png"
+import Bind from "./media/Bind.png"
 
 function MainGame(props) {
     const [gameEnded, startGame] = React.useState(false);
     const [round, setRound] = React.useState(1);
-    const [pics, setPics] = useState([{"name": 'k4m1DPP/2023-01-21-3.png', "coords": [500, 500]}]);
-    const currentPic = "https://i.ibb.co/"+pics[0].name;
-    const [selectedMap, setMap] = React.useState("Ascent");
+    const [pics, setPics] = useState([{name: 'k4m1DPP/2023-01-21-3.png', coords: [500, 500]}, {name: 'XXPDZ2R/2023-01-21-1.png', coords: [500, 500]}]);
+    const [currentPic, changePic] = useState("https://i.ibb.co/"+pics[0].name);
+    const [selectedMap, setMap] = React.useState(Ascent);
+    const maps = [{name: "Ascent", url: Ascent}, {name: "Pearl", url: Pearl}, {name: "Bind", url: Bind}];
     const changeMap = (e) => {
       setMap(e.target.value);
+    }
+    const endRound = () => {
+      setRound(round+1);
+      changePic("https://i.ibb.co/"+pics[round-1].name);
     }
     return (
       /* "_id": "new9",
@@ -27,14 +33,14 @@ function MainGame(props) {
     <div className="MainGame">
       <div className="MainDisplay">
         <div className = "Viewer" >
-          <img className = "ViewImage" src = "https://i.ibb.co/k4m1DPP/2023-01-21-3.png" />
+          <img className = "ViewImage" src = {currentPic} />
         </div>
         <div className="MapBox">
-          <select id="MapSelect" value={selectedMap} onChange={changeMap}>
-            <option value="Ascent" selected>Ascent</option>
-            <option value="Pearl">Pearl</option>
+          <select id="MapSelect" onChange={changeMap}>
+           {maps.map((map) => <option value = {map.url} label = {map.name}></option>)}
           </select>
-          <GameMap currentMap = {selectedMap} />
+          <GameMap currentMap = {selectedMap} mapList = {maps} />
+          <button id="GuessButton" onClick={endRound}>Guess</button>
         </div>
       </div>        
     </div>

@@ -5,13 +5,11 @@ import 'leaflet/dist/leaflet.css';
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import {CRS, Icon} from 'leaflet'
 import Ascent from "./media/Ascent.png"
-import Pearl from "./media/Pearl.png"
 
 function GameMap(props) {
     const [map, setMap] = useState(Ascent);
-    const maps = {"Ascent": Ascent, "Pearl": Pearl};
     useEffect(() => {
-        setMap(maps[props.currentMap]);
+        setMap(props.currentMap);
     }, [props.currentMap]);
     const bounds = [
         [0, 0],
@@ -29,9 +27,10 @@ function GameMap(props) {
     
       return position === null ? null : (
         <Marker icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}  position={position}>
+            {/*  if you need coordinates uncomment this 
             <Popup>
                 {position[0]}, {position[1]}
-            </Popup>
+            </Popup>*/}
         </Marker>
       )
     }
@@ -43,9 +42,6 @@ function GameMap(props) {
       "lng": "600",
       "location": "Teyvat"
   }*/
-  //           <LocationMarker position={[0, 0]} />    bounds = {[[0,0], [20, 20]]}        url="https://static.wikia.nocookie.net/valorant/images/6/63/Pearl_minimap.png"
-  //images stored locally (?), but have id, names, and store their lat/longitude locally
-  //<img class = "MainImage" src="https://f004.backblazeb2.com/file/cldimglt/pic15.jpg" />
         <MapContainer center = {[500,500]} 
         zoom={-1} 
         maxZoom={2}
