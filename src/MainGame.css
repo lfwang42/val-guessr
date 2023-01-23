@@ -44,7 +44,7 @@
 }
 
 .MapBox {
-  height:35%;
+  height:40%;
   bottom: 20px;
   min-width: 400px;
   min-height: 200px;
@@ -67,4 +67,16 @@
   width:100%;
   display: block;
   object-fit: contain;
+}
+
+#MapSelect {
+  min-height: 50px;
+  min-width: 100%;
+  position: absolute;
+  top: -60px;
+  left: 0;
+  background-color: red;
+  color: white;
+  text-align: center;
+  font: 18px Arial, sans-serif;
 }

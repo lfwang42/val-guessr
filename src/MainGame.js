@@ -11,7 +11,10 @@ function MainGame(props) {
     const [round, setRound] = React.useState(1);
     const [pics, setPics] = useState([{"name": 'k4m1DPP/2023-01-21-3.png', "coords": [500, 500]}]);
     const currentPic = "https://i.ibb.co/"+pics[0].name;
-
+    const [selectedMap, setMap] = React.useState("Ascent");
+    const changeMap = (e) => {
+      setMap(e.target.value);
+    }
     return (
       /* "_id": "new9",
       "name": "pic49.jpg",
@@ -27,7 +30,11 @@ function MainGame(props) {
           <img className = "ViewImage" src = "https://i.ibb.co/k4m1DPP/2023-01-21-3.png" />
         </div>
         <div className="MapBox">
-          <GameMap />
+          <select id="MapSelect" value={selectedMap} onChange={changeMap}>
+            <option value="Ascent" selected>Ascent</option>
+            <option value="Pearl">Pearl</option>
+          </select>
+          <GameMap currentMap = {selectedMap} />
         </div>
       </div>        
     </div>
