@@ -9,6 +9,7 @@ import Bind from "./media/Bind.png"
 
 function MainGame(props) {
     const [gameEnded, startGame] = React.useState(false);
+    const [guessMade, toggleButton] = useState(false);
     const [round, setRound] = React.useState(1);
     const [pics, setPics] = useState([{name: 'k4m1DPP/2023-01-21-3.png', coords: [500, 500]}, {name: 'XXPDZ2R/2023-01-21-1.png', coords: [500, 500]}]);
     const [currentPic, changePic] = useState("https://i.ibb.co/"+pics[0].name);
@@ -17,6 +18,11 @@ function MainGame(props) {
     const changeMap = (e) => {
       setMap(e.target.value);
     }
+
+    const enableButton = () => {
+      toggleButton(true);
+    }
+
     const endRound = () => {
       setRound(round+1);
       changePic("https://i.ibb.co/"+pics[round-1].name);
@@ -39,8 +45,8 @@ function MainGame(props) {
           <select id="MapSelect" onChange={changeMap}>
            {maps.map((map) => <option value = {map.url} label = {map.name}></option>)}
           </select>
-          <GameMap currentMap = {selectedMap} mapList = {maps} />
-          <button id="GuessButton" onClick={endRound}>Guess</button>
+          <GameMap currentMap = {selectedMap} guessMade = {guessMade} enableButton = {enableButton}/>
+          <button id="GuessButton" disabled={!guessMade} onClick={endRound}>Make a Guess</button>
         </div>
       </div>        
     </div>

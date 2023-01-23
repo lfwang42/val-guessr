@@ -1,6 +1,6 @@
 import './GameMap.css';
 import React, { useEffect, useState } from 'react';
-import { MapContainer, Marker, useMapEvents, ImageOverlay, Popup } from 'react-leaflet'
+import { MapContainer, Marker, useMapEvents, ImageOverlay, Popup, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import {CRS, Icon} from 'leaflet'
@@ -8,6 +8,7 @@ import Ascent from "./media/Ascent.png"
 
 function GameMap(props) {
     const [map, setMap] = useState(Ascent);
+    const [position, setPosition] = useState(null)
     useEffect(() => {
         setMap(props.currentMap);
     }, [props.currentMap]);
@@ -16,12 +17,25 @@ function GameMap(props) {
         [1024, 1024]
       ];
     const maxBounds = [[0,0],[1024,1024]];
+    /*function ButtonUpdate() {
+        const map = useMapEvents({
+        click() {
+            if (!props.guessMade) {props.enableButton(true);}
+        },
+        });
+    }*/
+    function GuessHandler() {
+        const m = useMapEvents({
+            click(e) {
+                props.enableButton();  
+            },
+        });
+    }
     
     function LocationMarker() {
-      const [position, setPosition] = useState(null)
-      const map = useMapEvents({
+      const m = useMapEvents({
         click(e) {
-          setPosition([e.latlng.lat, e.latlng.lng]);     
+          setPosition([e.latlng.lat, e.latlng.lng]);
         },
       });
     
@@ -57,6 +71,7 @@ function GameMap(props) {
             zIndex = {1}
           />
           <LocationMarker />
+          <GuessHandler />
         </MapContainer>       
  
     );
