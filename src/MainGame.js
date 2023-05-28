@@ -8,7 +8,7 @@ import Pearl from "./media/Pearl.png"
 import Bind from "./media/Bind.png"
 
 function MainGame(props) {
-    const [gameEnded, startGame] = React.useState(false);
+    const [resultsShown, showResults] = React.useState(false);
     const [guessMade, toggleGuess] = useState(false);
     const [guessCoords, setGuessCoords] = useState(null);
     const [round, setRound] = useState(0);
