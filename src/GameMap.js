@@ -8,11 +8,15 @@ import Ascent from "./media/Ascent.png"
 
 function GameMap(props) {
     const [map, setMap] = useState(Ascent);
-    const [position, setPosition] = useState(null);
+    const [position, setPosition] = useState(props.guessCoords);
 
     useEffect(() => {
-        setMap(props.currentMap);
-    }, [props.currentMap]);
+      props.setCoords(position);
+    }, [position]);
+
+    useEffect(() => {
+      setMap(props.currentMap);
+  }, [props.currentMap]);
 
     useEffect(() => {
       if (!props.guessMade) {

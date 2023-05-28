@@ -10,11 +10,15 @@ import Bind from "./media/Bind.png"
 function MainGame(props) {
     const [gameEnded, startGame] = React.useState(false);
     const [guessMade, toggleGuess] = useState(false);
+    const [guessCoords, setGuessCoords] = useState(null);
     const [round, setRound] = useState(0);
-    const [pics, setPics] = useState([{name: 'k4m1DPP/2023-01-21-3.png', coords: [500, 500]}, {name: 'XXPDZ2R/2023-01-21-1.png', coords: [500, 500]}]);
-    const [currentPic, changePic] = useState("https://i.ibb.co/"+pics[0].name);
+    const [score, setScore] = useState(0);
+    const [pics, setPics] = useState([{name: 'pic1.png', map: Ascent, coords: [500, 500]}, {name: 'pic2.png', map: Ascent, coords: [500, 500]}, {name: 'pic3.png', map: Ascent, coords: [500, 500]}]);
+    const [currentPic, changePic] = useState("https://f005.backblazeb2.com/file/valgsrimg/"+pics[0].name);
+    var split = ("https://f005.backblazeb2.com/file/valgsrimg/"+pics[0].name).split('.');
+    const [currentAns, changeAns] = useState("https://f005.backblazeb2.com/file/valgsrimg/"+split[0]+"ans.png");
     const [selectedMap, setMap] = React.useState(Ascent);
-    const maps = [{name: "Ascent", url: Ascent}, {name: "Pearl", url: Pearl}, {name: "Bind", url: Bind}];
+    const maps = [{key: "Ascent", url: Ascent}, {key: "Pearl", url: Pearl}, {key: "Bind", url: Bind}];
     const [buttonText, setButtonText] = useState("Click on the Map to Guess");
     const changeMap = (e) => {
       setMap(e.target.value);
@@ -27,8 +31,19 @@ function MainGame(props) {
     }
 
     const endRound = () => {
-      changePic("https://i.ibb.co/"+pics[round+1].name);
+      var roundScore = 0;
+      if (pics[round].map === selectedMap) {
+        const diff = Math.sqrt(Math.pow(Math.abs(pics[round].coords[0] - guessCoords[0]), 2) + Math.pow(Math.abs(pics[round].coords[1] - guessCoords[1]), 2));
+        roundScore = 5000 - diff;
+        setScore(score + roundScore);
+      }
+      console.log(score + 5000 - Math.abs(pics[round].coords[0] - guessCoords[0]) - Math.abs(pics[round].coords[1] - guessCoords[1]));
+      var newPic = "https://f005.backblazeb2.com/file/valgsrimg/"+pics[round+1].name;
+      changePic(newPic);
+      changeAns(newPic.slice(0, -4) + "ans.png");
       setRound(round+1);
+      setGuessCoords(null);
+      toggleGuess(false);
     }
     return (
       /* "_id": "new9",
@@ -42,13 +57,18 @@ function MainGame(props) {
     <div className="MainGame">
       <div className="MainDisplay">
         <div className = "Viewer" >
-          <img className = "ViewImage" src = {currentPic} />
+          <img className = "ViewImage" src = {currentPic} alt = {"game location"} />
+          {/* add answer pic + score in middle after \, if its last round next round button becomes next game
+              also hosting?*/}
+          <div className = "AnswerBox" >
+            <img className = "ViewImage" src = {currentPic} alt = {"game location"} />
+          </div>
         </div>
         <div className="MapBox">
           <select id="MapSelect" onChange={changeMap}>
-           {maps.map((map) => <option value = {map.url} label = {map.name}></option>)}
+           {maps.map((map) => <option value = {map.url} label = {map.key}></option>)}
           </select>
-          <GameMap currentMap = {selectedMap} guessMade = {guessMade} enableButton = {enableButton}/>
+          <GameMap currentMap = {selectedMap} guessCoords = {guessCoords} setCoords = {setGuessCoords} guessMade = {guessMade} enableButton = {enableButton}/>
           <button id="GuessButton" disabled={!guessMade} onClick={endRound}>{buttonText}</button>
         </div>
       </div>        
