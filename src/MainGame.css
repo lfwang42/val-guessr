@@ -1,16 +1,16 @@
 @import url("~leaflet/dist/leaflet.css");
 
-.leaflet-container {
+/* .leaflet-container {
   width: 100%;
   height: 100%;
-  opacity: 20%;
-  transition:0s 1s;
-}
+}  */
 
-.leaflet-container:hover {
+/* .leaflet-container:hover {
   opacity: 100%;
   transition: 0s;
 }
+ */ 
+
 
 
 .MainGame {
@@ -104,4 +104,10 @@
 #GuessButton:disabled {
   color: grey;
   background-color: rgba(0,0,0,0);;
+}
+
+.Results {
+  width: 100%;
+  height: 100%;
+  display: block;
 }

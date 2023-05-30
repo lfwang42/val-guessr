@@ -6,6 +6,7 @@ import GameMap from './GameMap';
 import Ascent from "./media/Ascent.png"
 import Pearl from "./media/Pearl.png"
 import Bind from "./media/Bind.png"
+import ResultsMap from './ResultsMap';
 
 function MainGame(props) {
     const [resultsShown, showResults] = React.useState(false);
@@ -30,7 +31,8 @@ function MainGame(props) {
       setButtonText("Guess");
     }
 
-    const endRound = () => {
+    const showAnswer = () => {
+      showResults(true)
       var roundScore = 0;
       if (pics[round].map === selectedMap) {
         const diff = Math.sqrt(Math.pow(Math.abs(pics[round].coords[0] - guessCoords[0]), 2) + Math.pow(Math.abs(pics[round].coords[1] - guessCoords[1]), 2));
@@ -38,12 +40,17 @@ function MainGame(props) {
         setScore(score + roundScore);
       }
       console.log(score + 5000 - Math.abs(pics[round].coords[0] - guessCoords[0]) - Math.abs(pics[round].coords[1] - guessCoords[1]));
+
+    }
+    const endRound = () => {
+      
       var newPic = "https://f005.backblazeb2.com/file/valgsrimg/"+pics[round+1].name;
       changePic(newPic);
       changeAns(newPic.slice(0, -4) + "ans.png");
       setRound(round+1);
       setGuessCoords(null);
       toggleGuess(false);
+      showResults(false)
     }
     return (
       /* "_id": "new9",
@@ -56,22 +63,28 @@ function MainGame(props) {
   //<img class = "MainImage" src="https://f004.backblazeb2.com/file/cldimglt/pic15.jpg" />
     <div className="MainGame">
       <div className="MainDisplay">
-        <div className = "Viewer" >
+        
+       
+        { !resultsShown ? 
+        <div className = "MidRound"> 
+          <div className = "Viewer" >
           <img className = "ViewImage" src = {currentPic} alt = {"game location"} />
           {/* add answer pic + score in middle after \, if its last round next round button becomes next game
               also hosting?*/}
-          <div className = "AnswerBox" >
-            <img className = "ViewImage" src = {currentPic} alt = {"game location"} />
           </div>
-        </div>
-        <div className="MapBox">
-          <select id="MapSelect" onChange={changeMap}>
-           {maps.map((map) => <option value = {map.url} label = {map.key}></option>)}
-          </select>
-          <GameMap currentMap = {selectedMap} guessCoords = {guessCoords} setCoords = {setGuessCoords} guessMade = {guessMade} enableButton = {enableButton}/>
-          <button id="GuessButton" disabled={!guessMade} onClick={endRound}>{buttonText}</button>
-        </div>
-      </div>        
+          <div className="MapBox">
+            <select id="MapSelect" onChange={changeMap}>
+            {maps.map((map) => <option value = {map.url} label = {map.key}></option>)}
+            </select>
+            <GameMap currentMap = {selectedMap} guessCoords = {guessCoords} setCoords = {setGuessCoords} guessMade = {guessMade} enableButton = {enableButton}/>
+            <button id="GuessButton" disabled={!guessMade} onClick={showAnswer}>{buttonText}</button>
+          </div>
+        </div> : null}
+        { resultsShown ?  <div className = "Results" >
+            <ResultsMap currentMap = {pics[round].map} answerCoords = {pics[round].coords} guessCoords = {guessCoords}/>
+            <button id="NextRoundButton" onClick={endRound}>{"Next Round"}</button>
+            </div> : null }         
+      </div>
     </div>
  
     );

@@ -69,7 +69,7 @@ function GameMap(props) {
       "lng": "600",
       "location": "Teyvat"
   }*/
-        <MapContainer center = {[500,500]} 
+        <MapContainer className = {"MainContainer"} center = {[500,500]} 
         zoom={-1} 
         maxZoom={2}
         minZoom={-1}

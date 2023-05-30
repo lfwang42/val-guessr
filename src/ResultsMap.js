@@ -50,10 +50,9 @@ function ResultsMap(props) {
     
       return position === null ? null : (
         <Marker icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}  position={position}>
-            {/*  if you need coordinates uncomment this 
             <Popup>
                 {position[0]}, {position[1]}
-            </Popup>*/}
+            </Popup>
         </Marker>
       )
     }
@@ -65,7 +64,7 @@ function ResultsMap(props) {
       "lng": "600",
       "location": "Teyvat"
   }*/
-        <MapContainer center = {[500,500]} 
+        <MapContainer className = {"resultContainer"} center = {[500,500]} 
         zoom={-1} 
         maxZoom={2}
         minZoom={-1}
