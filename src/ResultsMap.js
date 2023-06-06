@@ -3,23 +3,23 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, Marker, useMapEvents, ImageOverlay, Popup, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import flagIcon from "./redFlag.png"
 import {CRS, Icon} from 'leaflet'
 import Ascent from "./media/Ascent.png"
 
 function ResultsMap(props) {
     const [map, setMap] = useState(Ascent);
-    const [position, setPosition] = useState(null);
 
     useEffect(() => {
         setMap(props.currentMap);
     }, [props.currentMap]);
 
-    useEffect(() => {
-      if (!props.guessMade) {
-        setPosition(null);
-      }
+    // useEffect(() => {
+    //   if (!props.guessMade) {
+    //     setPosition(null);
+    //   }
 
-    }, [props.guessMade]);
+    // }, [props.guessMade]);
 
     const bounds = [
         [0, 0],
@@ -33,26 +33,30 @@ function ResultsMap(props) {
         },
         });
     }*/
-    function GuessHandler() {
-        const m = useMapEvents({
-            click(e) {
-                props.enableButton();  
-            },
-        });
-    }
+    // function GuessHandler() {
+    //     const m = useMapEvents({
+    //         click(e) {
+    //             props.enableButton();  
+    //         },
+    //     });
+    // }
     
-    function LocationMarker() {
-      const m = useMapEvents({
-        click(e) {
-          setPosition([e.latlng.lat, e.latlng.lng]);
-        },
-      });
-    
-      return position === null ? null : (
-        <Marker icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}  position={position}>
-            <Popup>
+    function GuessMarker() {    
+      return props.guessCoords === null ? null : (
+        <Marker icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}  position={props.guessCoords}>
+            {/* <Popup>
                 {position[0]}, {position[1]}
-            </Popup>
+            </Popup> */}
+        </Marker>
+      )
+    }
+
+    function AnswerMarker() {    
+      return props.answerCoords === null ? null : (
+        <Marker icon={new Icon({iconUrl: flagIcon, iconSize: [25, 41], iconAnchor: [12, 41]})}  position={props.answerCoords}>
+            {/* <Popup>
+                {position[0]}, {position[1]}
+            </Popup> */}
         </Marker>
       )
     }
@@ -78,8 +82,9 @@ function ResultsMap(props) {
             bounds = {bounds}
             zIndex = {1}
           />
-          <LocationMarker />
-          <GuessHandler />
+          <GuessMarker />
+          <AnswerMarker />
+          {/* <GuessHandler /> */}
         </MapContainer>       
  
     );

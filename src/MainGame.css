@@ -17,7 +17,7 @@
     text-align: center;
     height: 100%;
     width: 100%;
-
+    background: #282c34;
   }
   
 .main-logo {
@@ -34,10 +34,10 @@
   height: 100%;
 }
 
-  .MainImage {
-    max-width: 100%;
-    max-height: 100%;
-  }
+.MainImage {
+  max-width: 100%;
+  max-height: 100%;
+}
   
 .map {
   height:50%;
@@ -107,7 +107,34 @@
 }
 
 .Results {
-  width: 100%;
-  height: 100%;
-  display: block;
+  width: 55%;
+  height: 70%;
+  position: relative;
+  top: 20%;
+  margin:auto;
+  border: 3px solid black;
+}
+
+#NextRoundButton{
+  min-width: 100px;
+  min-height: 50px;
+  width:100%;
+  height:50px;
+  position:absolute;
+  background-color: #FF3232;
+  color: white;
+  text-align: center;
+  font: 18px Arial, sans-serif;
+  bottom: 0px;
+  right: 0px;
+}
+
+#NextRoundButton:hover {
+  border: 2px solid grey;
+}
+
+#scoreLabel {
+  color: white;
+  text-align: center;
+  font: 18px Arial, sans-serif;
 }

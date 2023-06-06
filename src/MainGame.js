@@ -7,6 +7,7 @@ import Ascent from "./media/Ascent.png"
 import Pearl from "./media/Pearl.png"
 import Bind from "./media/Bind.png"
 import ResultsMap from './ResultsMap';
+import LinearProgress from '@mui/material/LinearProgress';
 
 function MainGame(props) {
     const [resultsShown, showResults] = React.useState(false);
@@ -14,6 +15,7 @@ function MainGame(props) {
     const [guessCoords, setGuessCoords] = useState(null);
     const [round, setRound] = useState(0);
     const [score, setScore] = useState(0);
+    const [roundScore, setRoundScore] = useState(0);
     const [pics, setPics] = useState([{name: 'pic1.png', map: Ascent, coords: [500, 500]}, {name: 'pic2.png', map: Ascent, coords: [500, 500]}, {name: 'pic3.png', map: Ascent, coords: [500, 500]}]);
     const [currentPic, changePic] = useState("https://f005.backblazeb2.com/file/valgsrimg/"+pics[0].name);
     var split = ("https://f005.backblazeb2.com/file/valgsrimg/"+pics[0].name).split('.');
@@ -33,10 +35,9 @@ function MainGame(props) {
 
     const showAnswer = () => {
       showResults(true)
-      var roundScore = 0;
       if (pics[round].map === selectedMap) {
         const diff = Math.sqrt(Math.pow(Math.abs(pics[round].coords[0] - guessCoords[0]), 2) + Math.pow(Math.abs(pics[round].coords[1] - guessCoords[1]), 2));
-        roundScore = 5000 - diff;
+        setRoundScore(Math.round(5000 - diff));
         setScore(score + roundScore);
       }
       console.log(score + 5000 - Math.abs(pics[round].coords[0] - guessCoords[0]) - Math.abs(pics[round].coords[1] - guessCoords[1]));
@@ -82,6 +83,7 @@ function MainGame(props) {
         </div> : null}
         { resultsShown ?  <div className = "Results" >
             <ResultsMap currentMap = {pics[round].map} answerCoords = {pics[round].coords} guessCoords = {guessCoords}/>
+            <p id="scoreLabel">You earned {roundScore} points this round.</p>
             <button id="NextRoundButton" onClick={endRound}>{"Next Round"}</button>
             </div> : null }         
       </div>
