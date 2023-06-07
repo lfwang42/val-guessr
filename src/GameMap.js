@@ -78,7 +78,7 @@ function GameMap(props) {
         crs={CRS.Simple}
         whenCreated={ mapInstance => { this.mapRef.current = mapInstance } }>
           <ImageOverlay
-            attribution='&copy; <a href="https://valorant.fandom.com">Valorant Wiki</a>'
+            // attribution='&copy; <a href="https://valorant.fandom.com">Valorant Wiki</a>'
             url = {map}
             bounds = {bounds}
             zIndex = {1}

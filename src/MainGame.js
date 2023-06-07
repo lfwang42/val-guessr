@@ -1,13 +1,15 @@
 import './MainGame.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import * as React from 'react';
 import 'leaflet/dist/leaflet.css';
-import Select from 'react';
 import GameMap from './GameMap';
 import Ascent from "./media/Ascent.png"
 import Pearl from "./media/Pearl.png"
 import Bind from "./media/Bind.png"
 import ResultsMap from './ResultsMap';
-import LinearProgress from '@mui/material/LinearProgress';
+import Box from '@mui/material/Box';
+import LinearProgress, { linearProgressClasses }  from '@mui/material/LinearProgress';
+
 
 function MainGame(props) {
     const [resultsShown, showResults] = React.useState(false);
@@ -36,12 +38,22 @@ function MainGame(props) {
     const showAnswer = () => {
       showResults(true)
       if (pics[round].map === selectedMap) {
-        const diff = Math.sqrt(Math.pow(Math.abs(pics[round].coords[0] - guessCoords[0]), 2) + Math.pow(Math.abs(pics[round].coords[1] - guessCoords[1]), 2));
-        setRoundScore(Math.round(5000 - diff));
+        // const diff = Math.sqrt(Math.pow(Math.abs(pics[round].coords[0] - guessCoords[0]), 2) + Math.pow(Math.abs(pics[round].coords[1] - guessCoords[1]), 2));
+        const x = Math.abs(pics[round].coords[0] - guessCoords[0]);
+        const y = Math.abs(pics[round].coords[1] - guessCoords[1]);
+        const z = Math.sqrt( x * x + y * y);
+        const mapSize = 3000;
+        if (z < 20) {
+          setRoundScore(5000);
+        }
+        else {
+          setRoundScore(Math.round(5000 * Math.pow(Math.E, -10 * z / mapSize)));
+        }
         setScore(score + roundScore);
+        console.log(pics[round].coords);
+        console.log(guessCoords);
+        console.log(z);
       }
-      console.log(score + 5000 - Math.abs(pics[round].coords[0] - guessCoords[0]) - Math.abs(pics[round].coords[1] - guessCoords[1]));
-
     }
     const endRound = () => {
       
@@ -54,14 +66,6 @@ function MainGame(props) {
       showResults(false)
     }
     return (
-      /* "_id": "new9",
-      "name": "pic49.jpg",
-      "lat": "1056",
-      "lng": "600",
-      "location": "Teyvat"
-  }*/
-  //images stored locally (?), but have id, names, and store their lat/longitude locally
-  //<img class = "MainImage" src="https://f004.backblazeb2.com/file/cldimglt/pic15.jpg" />
     <div className="MainGame">
       <div className="MainDisplay">
         
@@ -84,6 +88,13 @@ function MainGame(props) {
         { resultsShown ?  <div className = "Results" >
             <ResultsMap currentMap = {pics[round].map} answerCoords = {pics[round].coords} guessCoords = {guessCoords}/>
             <p id="scoreLabel">You earned {roundScore} points this round.</p>
+            <Box sx={{ width: '90%', margin: 'auto'}}>
+              <LinearProgress sx={{
+                height: '10px',
+                borderRadius: 5,
+                [`& .${linearProgressClasses.bar}`]: {
+                  borderRadius: 5}}} variant="determinate" value={roundScore/50} />
+            </Box>
             <button id="NextRoundButton" onClick={endRound}>{"Next Round"}</button>
             </div> : null }         
       </div>
